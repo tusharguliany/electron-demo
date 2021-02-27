@@ -1,14 +1,22 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron')
 
-function createWindow() {
+const createWindow = () => {
+
     const window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        minWidth: 800,
+        minHeight: 600,
         webPreferences: {
-            nodeIntegration
-        }
+            nodeIntegration: true,
+            enableRemoteModule: true,
+        },
+        title: 'Electron Demo',
+        frame: true
     })
     window.loadFile('index.html')
+
+    window.on('closed', () => {
+        app.quit()
+    })
 }
 
 app.whenReady().then(createWindow)
@@ -23,4 +31,11 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+})
+
+ipcMain.on('performActions', (event, args) => {
+    dialog.showMessageBox({
+        title: 'Your Details',
+        message: 'Full Name : ' + args.firstName + ' ' + args.lastName
+    });
 })

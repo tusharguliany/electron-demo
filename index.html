@@ -5,13 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electron-Demo</title>
+    <style>
+        .container {
+            padding: 10px;
+        }
+        .form-item {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
+    <div class="container">
+        <div>
+            <h1>Basic Details Form</h1>
+        </div>
+        <div>
+            <label for="firstName" class="form-label">First Name</label> <br />
+            <input type="text" id="firstName" placeholder="Enter First Name here">
+        </div>
+        <div class="form-item">
+            <label for="lastName" class="form-label">Last Name</label> <br />
+            <input type="text" id="lastName" placeholder="Enter Last Name here">
+        </div>
+        <div class="form-item">
+            <button id="btn">Click Me!</button>
+        </div>
+    </div>
+    <script>
+        const { ipcRenderer } = window.require('electron');
+        document.getElementById('btn').addEventListener('click', () => {
+            ipcRenderer.send('performActions', {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value
+            });
+        })
+    </script>
 </body>
 </html>

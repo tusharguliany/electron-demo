@@ -6,8 +6,8 @@
   "scripts": {
     "start": "electron ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["electron"],
+  "author": "Tushar Arora",
   "license": "ISC",
   "devDependencies": {
     "electron": "^11.3.0"
